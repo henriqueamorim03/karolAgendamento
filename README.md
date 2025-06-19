@@ -1,50 +1,104 @@
-# Welcome to your Expo app 👋
+# 💅 Karol Agendamento - App para Salão de Beleza
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é um aplicativo de agendamento de horários desenvolvido em React Native com Expo, focado em estúdios de beleza e design de cílios. O objetivo é fornecer uma interface simples para que os clientes possam marcar seus horários, enquanto o proprietário do salão recebe notificações automáticas via WhatsApp para cada novo agendamento.
 
-## Get started
+## ✨ Funcionalidades Principais
 
-1. Install dependencies
+* **Tela de Introdução:** Uma tela de boas-vindas para apresentar a marca ao cliente.
+* **Formulário de Agendamento Simples:** Coleta de nome, WhatsApp, dia, mês e hora do agendamento em campos de texto diretos, sem a complexidade de calendários.
+* **Integração com Firebase:** Os agendamentos são salvos em tempo real no banco de dados Cloud Firestore, garantindo segurança e escalabilidade.
+* **Notificação Automática via WhatsApp:** Assim que um agendamento é salvo, uma Firebase Cloud Function é acionada e utiliza a API da Twilio para enviar uma mensagem de notificação instantânea para o número do proprietário do salão.
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tecnologias Utilizadas
 
-2. Start the app
+* **Frontend:** React Native com Expo
+* **Banco de Dados:** Google Cloud Firestore
+* **Backend (Serverless):** Firebase Cloud Functions
+* **Serviço de Mensagens:** Twilio WhatsApp API
+* **Linguagem:** TypeScript
 
-   ```bash
-   npx expo start
-   ```
+## 📸 Screenshots
 
-In the output, you'll find options to open the app in a
+| Tela de Introdução | Tela de Agendamento |
+| :---: | :---: |
+| ![Tela de Introdução](https://via.placeholder.com/250x500.png?text=Tela+de+Introdução) | ![Tela de Agendamento](https://via.placeholder.com/250x500.png?text=Tela+de+Agendamento) |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🚀 Começando
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Para executar este projeto em sua máquina local, siga os passos abaixo.
 
-## Get a fresh project
+### Pré-requisitos
 
-When you're ready, run:
+* [Node.js](https://nodejs.org/) (versão LTS)
+* [Git](https://git-scm.com/)
+* Uma conta no [Firebase](https://firebase.google.com/)
+* Uma conta na [Twilio](https://twilio.com/)
 
-```bash
-npm run reset-project
-```
+### Instalação
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1.  **Clone o repositório** (se ele estiver no GitHub):
+    ```bash
+    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+    cd seu-repositorio
+    ```
+2.  **Instale as dependências do aplicativo:**
+    ```bash
+    npm install
+    ```
+3.  **Instale as dependências das Funções do Firebase:**
+    ```bash
+    cd functions
+    npm install
+    cd .. 
+    ```
 
-## Learn more
+## ⚙️ Configuração
 
-To learn more about developing your project with Expo, look at the following resources:
+Para que o projeto funcione, você precisa configurar suas chaves de API do Firebase e da Twilio.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+> ⚠️ **Aviso de Segurança:** Este projeto armazena as chaves diretamente nos arquivos de código para fins de simplicidade e aprendizado. Em um projeto de produção ou público, **NUNCA** faça isso. Use variáveis de ambiente (com um arquivo `.env`) para o frontend e o sistema de secrets do Google Cloud para as Cloud Functions.
 
-## Join the community
+#### **1. Configuração do Firebase (Frontend)**
 
-Join our community of developers creating universal apps.
+1.  Siga os passos da **Fase 1** do nosso guia para criar um projeto no Firebase.
+2.  Crie um **App da Web** (`</>`) nas configurações do seu projeto.
+3.  Crie um arquivo chamado `firebaseConfig.js` na raiz do seu projeto.
+4.  Cole as suas credenciais (o objeto `firebaseConfig`) dentro deste arquivo, usando o modelo que já criamos.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### **2. Configuração da Twilio e Cloud Functions (Backend)**
+
+1.  Abra o arquivo `functions/index.js`.
+2.  Preencha as seguintes variáveis com as suas informações da Twilio:
+    * `accountSid`
+    * `authToken`
+    * `toWhatsAppNumber` (o seu número pessoal que receberá as notificações)
+    * `contentSid` (o ID do seu template de mensagem do WhatsApp)
+
+## 🏃 Executando o Projeto
+
+### 1. Como Usar o Expo para Testar no Celular
+
+O Expo torna o processo de testar seu aplicativo em um celular físico muito simples, através do app **Expo Go**.
+
+1.  **Instale o Expo Go:** No seu celular, baixe o aplicativo "Expo Go" da [Play Store (Android)](https://play.google.com/store/apps/details?id=host.exp.exponent) ou da [App Store (iOS)](https://apps.apple.com/us/app/expo-go/id982107779).
+2.  **Inicie o Servidor de Desenvolvimento:** No seu computador, na pasta raiz do projeto, execute o comando:
+    ```bash
+    npx expo start
+    ```
+3.  **Conecte na Mesma Rede:** Garanta que seu computador e seu celular estejam conectados na **mesma rede Wi-Fi**. Este passo é crucial.
+4.  **Escaneie o QR Code:** Um QR Code aparecerá no seu terminal. Abra o aplicativo Expo Go no celular e use a função de escanear para ler o código.
+5.  **Teste o App:** O aplicativo de agendamento será carregado dentro do Expo Go, e você poderá usá-lo. Qualquer alteração que você salvar no código será refletida quase instantaneamente no celular.
+
+### 2. Ativando o Backend (Notificações)
+
+1.  Certifique-se de que seu projeto Firebase está no plano **Blaze**.
+2.  No terminal, navegue até a pasta `functions`:
+    ```bash
+    cd functions
+    ```
+3.  Faça o deploy das suas funções para a nuvem:
+    ```bash
+    firebase deploy --only functions
+    ```
+    
+Agora, com o frontend rodando via Expo Go e o backend ativo na nuvem, seu sistema está completo e pronto para ser testado de ponta a ponta.
